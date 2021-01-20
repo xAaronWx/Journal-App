@@ -13,4 +13,12 @@ Complete the bronze challenge, then make a new '/delete' endpoint that will dele
 However you complete this challenge, a request must be able to specify which animal needs to be deleted.  
 If the delete was successful, inform the user, otherwise alert the user to an error.
 
+ GOLD CHALLENGE:
+    Complete the silver challenge, but make a new '/update' endpoint that will let a request update animal data in the database.  
+    Like with the silver challenge, the request must be able to specify which animal needs to be updated.  
+    On success, inform the user, on failure, alert appropriately. 
+  Postman Body should look like the following.
+
+  { "name": "alligator", "legNumber": 4, "predator": true}
+
 							

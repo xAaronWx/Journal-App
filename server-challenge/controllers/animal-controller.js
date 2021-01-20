@@ -1,3 +1,4 @@
+const { query } = require("express");
 var express = require("express");
 var router = express.Router();
 var sequelize = require("../db");
@@ -30,6 +31,22 @@ router.delete("/delete/:id", function (req, res) {
 
   Animal.destroy(query)
     .then(() => res.status(200).json({ message: "Animal has been deleted" }))
+    .catch((err) => res.status(500).json({ error: err }));
+});
+
+router.put("/update/:id", function (req, res) {
+  const updateAnimalEntry = {
+    name: req.body.name,
+    legNumber: req.body.legNumber,
+    predator: req.body.predator,
+  };
+
+  const query = { where: { id: req.params.id } };
+
+  Animal.update(updateAnimalEntry, query)
+    .then((animal) =>
+      res.status(200).json({ message: "Your animal has been updated", animal })
+    )
     .catch((err) => res.status(500).json({ error: err }));
 });
 
