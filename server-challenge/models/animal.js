@@ -1,16 +1,20 @@
-module.exports = function(sequelize, DataTypes){
-  return sequelize.define('animal', {
+module.exports = function (sequelize, DataTypes) {
+  return sequelize.define("animal", {
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     legNumber: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
     },
     predator: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
-    }
-  })
-}
+      allowNull: false,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  });
+};
