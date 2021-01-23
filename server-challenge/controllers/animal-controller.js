@@ -30,6 +30,15 @@ router.get("/", validateSession, (req, res) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
+router.get("/mine", validateSession, (req, res) => {
+  let userId = req.user.id;
+  Animal.findAll({
+    where: { owner: userId },
+  })
+    .then((animal) => res.status(200).json(animal))
+    .catch((err) => res.status(500).json({ error: err }));
+});
+
 router.delete("/delete/:id", validateSession, function (req, res) {
   const query = { where: { id: req.params.id } };
 
