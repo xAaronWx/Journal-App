@@ -52,24 +52,33 @@ router.delete("/delete/:id", validateSession, function (req, res) {
     );
 });
 
-router.put("/update/:id", validateSession, function (req, res) {
-  const updateAnimalEntry = {
-    name: req.body.name,
-    legNumber: req.body.legNumber,
-    predator: req.body.predator,
-  };
+router.put("/update/:id", validateSession, (req, res) => {
+  Animal.update(req.body, {
+    where: {
+      id: req.params.id,
+      userId: req.user.id,
+    },
+  })
+    .then((animal) => res.status(200).json(animal))
+    .catch((err) => res.status(500).json({ error: err }));
+});
 
-  const query = { where: { id: req.params.id } };
-
-  Animal.update(updateAnimalEntry, query)
-    .then((animal) =>
-      res.status(200).json({ message: "Your animal has been updated", animal })
-    )
-    .catch((err) =>
+router.delete("/:id", validateSession, (req, res) => {
+  Animal.destroy({
+    where: {
+      id: req.params.id,
+      userId: req.user.id,
+    },
+  }).then(
+    (deleteSuccess = (recordsChanged) => {
       res
-        .status(500)
-        .json({ error: err, message: "The animal can't be updated yet" })
-    );
+        .status(200)
+        .json({ message: `${recordsChanged} record has been deleted.` });
+    }),
+    (deleteFail = (err) => {
+      res.status(500).json({ message: "Failed to delete", error: err });
+    })
+  );
 });
 
 module.exports = router;
